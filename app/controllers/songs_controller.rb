@@ -3,6 +3,22 @@ class SongsController < ApplicationController
     @songs=Song.all
   end
   def show
-    @songs=Song.find(params[:id])
+    @song=Song.find(params[:id])
   end
+  def new
+    @song=song.new
+  end
+  def create
+    if @song=song.create(song_params)
+      redirect_to @song, notice "song succesfully created"
+    else
+      render :new, notice "error, try again"
+    end
+  end
+
+  private
+  def song_params
+    params.require(:song).permit(:name,:duration,:artist_id,:album)
+  end
+
 end
